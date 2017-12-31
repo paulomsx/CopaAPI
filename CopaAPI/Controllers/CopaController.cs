@@ -10,6 +10,29 @@ namespace CopaAPI.Controllers
 {
     public class CopaController : ApiController
     {
+
+        public HttpResponseMessage Post([FromBody] Usuarios usuario) {
+
+            using (var contexto = new Contexto())
+            {
+                var query = from a in contexto.usuarios
+                            where a.email.Contains(usuario.email)
+                            select a;
+
+                //Verifica se existe email cadastrado
+                if (query.Count() == 0)
+                {
+                    contexto.usuarios.Add(usuario);
+                    contexto.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else {
+                    return Request.CreateResponse(HttpStatusCode.Conflict,"email já cadastrado");
+                }
+            }
+        }
+
+
         // GET api/copa
         public HttpResponseMessage Get()
         {
@@ -30,7 +53,7 @@ namespace CopaAPI.Controllers
                     {
                         var nome = usuario.nome;
                     }
-                    
+
 
                 }
 
@@ -47,6 +70,8 @@ namespace CopaAPI.Controllers
                 string mensagem = string.Format("Não encontrado {0}", 1);
                 HttpError error = new HttpError(mensagem);
                 return Request.CreateResponse(HttpStatusCode.NotFound, error);
+
+                
             }
         }
     }
