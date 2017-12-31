@@ -50,3 +50,4 @@ C:\Projetos\CopaAPI\CopaAPI\bin\MySql.Data.Entity.EF6.dll
 C:\Projetos\CopaAPI\CopaAPI\bin\MySql.Fabric.Plugin.dll
 C:\Projetos\CopaAPI\CopaAPI\bin\EntityFramework.xml
 C:\Projetos\CopaAPI\CopaAPI\bin\EntityFramework.SqlServer.xml
+C:\Projetos\CopaAPI\CopaAPI\obj\Debug\CopaAPI.csproj.CoreCompileInputs.cache
