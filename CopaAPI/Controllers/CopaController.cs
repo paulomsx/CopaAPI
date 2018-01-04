@@ -23,21 +23,12 @@ namespace CopaAPI.Controllers
                     var query = from a in contexto.usuarios
                                 select a;
 
-                    // Checagem do email
-                    query = from a in contexto.usuarios
-                            where a.email == email
-                            select a;
 
-                    if (query.Count() > 0) {
+                    if (query.Where(a => a.email == email).Count() > 0) {
                         return Request.CreateResponse(HttpStatusCode.Conflict, "email já cadastrado");
                     }
 
-                    // Checagem do nome
-                    query = from a in contexto.usuarios
-                            where a.nome == nome
-                            select a;
-
-                    if (query.Count() > 0)                {
+                    if (query.Where(a => a.nome == nome).Count() > 0) {
                         return Request.CreateResponse(HttpStatusCode.Conflict, "nome do usuário já cadastrado");
                     }
 
@@ -46,20 +37,17 @@ namespace CopaAPI.Controllers
                     contexto.SaveChanges();
 
                     // Pega id do usuario
-                    query = from a in contexto.usuarios
-                            where a.email == email
-                            select a;
-
-                    
+                    query = query.Where(a => a.email == email);
+                        
                     int id = query.FirstOrDefault().id;
                     
                     return Request.CreateResponse(HttpStatusCode.OK, string.Format("id = {0}",id));
 
                 }
             }
-            catch (KeyNotFoundException)
+            catch //(KeyNotFoundException)
             {
-                string mensagem = string.Format("Erro {0}", 1);
+                string mensagem = string.Format("Erro");
                 HttpError error = new HttpError(mensagem);
                 return Request.CreateResponse(HttpStatusCode.NotFound, error);
             }
@@ -91,6 +79,22 @@ namespace CopaAPI.Controllers
                     // var query = contexto.usuarios.Where(a => a.email == email);
                     //List<Usuarios> usu = query.ToList();
 
+                    // Checagem do email
+                    //query = from a in contexto.usuarios
+                    //        where a.email == email
+                    //        select a;
+
+                    //var query1 = query.Where(a => a.email == email);
+
+                    // Checagem do nome
+                    //query = from a in contexto.usuarios
+                    //        where a.nome == nome
+                    //        select a;
+
+                    //var query2 = query.Where(a => a.nome == nome);
+                    //query = from a in contexto.usuarios
+                    //        where a.email == email
+                    //        select a;
 
                 }
 
